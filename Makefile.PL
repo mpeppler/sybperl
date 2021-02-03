@@ -54,6 +54,19 @@ WriteMakefile('DISTNAME' => "sybperl",
 	      ($] >= 5.005 ?
 	       (ABSTRACT   => 'Sybase API modules',
 		AUTHOR     => 'Michael Peppler (mpeppler@peppler.org)') : ()),
+    	META_MERGE => {
+    'meta-spec' => { version => 2 },
+    resources => {
+      bugtracker => {
+				web => 'https://github.com/mpeppler/sybperl/issues',
+      },
+      repository => {
+        url  => 'https://github.com/mpeppler/sybperl.git',
+        web  => 'https://github.com/mpeppler/sybperl',
+        type => 'git',
+      }
+    },
+
 	      ($] >= 5.005 && $^O eq 'MSWin32' && 
 	       $Config{archname} =~ /-object\b/i ? (CAPI => 'TRUE') :()),
               'MAN3PODS' => { 'pod/sybperl.pod' => 'blib/man3/sybperl.3' }
