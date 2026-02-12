@@ -95,15 +95,24 @@ sub configPwd {
     select(STDOUT); $| = 1;
 
     print "The sybperl modules need access to a Sybase server to run the tests.\n";
-    print "To clear an entry please enter 'undef'\n";
-    print "Sybase server to use (default: $pwd{SRV}): ";
-    $pwd{SRV} = getAns(0) || $pwd{SRV};
-    print "User ID to log in to Sybase (default: $pwd{UID}): ";
-    $pwd{UID} = getAns(0) || $pwd{UID};
-    print "Password (default: $pwd{PWD}): ";
-    $pwd{PWD} = getAns(1) || $pwd{PWD};
-    print "Sybase database to use on $pwd{SRV} (default: $pwd{DB}): ";
-    $pwd{DB} = getAns(0) || $pwd{DB};
+    if ($$sattr{USE_ENV_PWD}) {
+        print "Using environment variables (ENV_SRV, ENV_UID, ENV_PWD, ENV_DB) to generate file $written_pwd_file.\n";
+        $pwd{SRV} = defined($ENV{ENV_SRV}) ? $ENV{ENV_SRV} : $pwd{SRV};
+        $pwd{UID} = defined($ENV{ENV_UID}) ? $ENV{ENV_UID} : $pwd{UID};
+        $pwd{PWD} = defined($ENV{ENV_PWD}) ? $ENV{ENV_PWD} : $pwd{PWD};
+        $pwd{DB} = defined($ENV{ENV_DB}) ? $ENV{ENV_DB} : $pwd{DB};
+    }
+    else {
+        print "To clear an entry please enter 'undef'\n";
+        print "Sybase server to use (default: $pwd{SRV}): ";
+        $pwd{SRV} = getAns(0) || $pwd{SRV};
+        print "User ID to log in to Sybase (default: $pwd{UID}): ";
+        $pwd{UID} = getAns(0) || $pwd{UID};
+        print "Password (default: $pwd{PWD}): ";
+        $pwd{PWD} = getAns(1) || $pwd{PWD};
+        print "Sybase database to use on $pwd{SRV} (default: $pwd{DB}): ";
+        $pwd{DB} = getAns(0) || $pwd{DB};
+    }
 
     warn "\n* Writing login information, including password, to file $written_pwd_file.\n\n";
     # Create the file non-readable by anyone else.
