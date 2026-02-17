@@ -95,12 +95,12 @@ sub configPwd {
     select(STDOUT); $| = 1;
 
     print "The sybperl modules need access to a Sybase server to run the tests.\n";
-    if ($$sattr{USE_ENV_PWD}) {
-        print "Using environment variables (ENV_SRV, ENV_UID, ENV_PWD, ENV_DB) to generate file $written_pwd_file.\n";
-        $pwd{SRV} = defined($ENV{ENV_SRV}) ? $ENV{ENV_SRV} : $pwd{SRV};
-        $pwd{UID} = defined($ENV{ENV_UID}) ? $ENV{ENV_UID} : $pwd{UID};
-        $pwd{PWD} = defined($ENV{ENV_PWD}) ? $ENV{ENV_PWD} : $pwd{PWD};
-        $pwd{DB} = defined($ENV{ENV_DB}) ? $ENV{ENV_DB} : $pwd{DB};
+    if ($$sattr{USE_ENV}) {
+        print "Using environment variables (ENV_SYB_SRV, ENV_SYB_UID, ENV_SYB_PWD, ENV_SYB_DB) to generate file $written_pwd_file.\n";
+        $pwd{SRV} = defined($ENV{ENV_SYB_SRV}) ? $ENV{ENV_SYB_SRV} : $pwd{SRV};
+        $pwd{UID} = defined($ENV{ENV_SYB_UID}) ? $ENV{ENV_SYB_UID} : $pwd{UID};
+        $pwd{PWD} = defined($ENV{ENV_SYB_PWD}) ? $ENV{ENV_SYB_PWD} : $pwd{PWD};
+        $pwd{DB} = defined($ENV{ENV_SYB_DB}) ? $ENV{ENV_SYB_DB} : $pwd{DB};
     }
     else {
         print "To clear an entry please enter 'undef'\n";
