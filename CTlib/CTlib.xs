@@ -5103,7 +5103,7 @@ static double constant(name, arg)
 					goto not_there;
 #endif
 				if (strEQ(name, "CS_SEC_EXTENDED_ENCRYPTION"))
-#ifdef CS_SEC_ENCRYPTION
+#ifdef CS_SEC_EXTENDED_ENCRYPTION
 					return CS_SEC_EXTENDED_ENCRYPTION;
 #else
 					goto not_there;

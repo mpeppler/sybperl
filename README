@@ -269,9 +269,36 @@ Once you have answered these eight questions, you can proceed:
 
       Uncomment the LINKTYPE line if required (see point b. above).
 
-   3) Type: perl Makefile.PL
+   3) Edit PWD
+
+      NOTE: This step is not normally necessary as the build process
+         now asks for this information up front or uses environment.
+         Use the user id and password that you want to use to run the
+         tests. It's probably a good idea to reset PWD to its
+         original state once you're done, unless you really don't have
+         any security concerns!
+
+      To run unattended build you can set following environment variables:
+
+         ENV_SYB_SRV (set to the Sybase server name you wish to use)
+         ENV_SYB_DB (set to the database you want to use on that server)
+         ENV_SYB_UID (set to the login ID on the server)
+         ENV_SYB_PWD (set to the password for that login ID)
+
+      and run
+         perl Makefile.PL --use_env
+
+      Make sure that the SYBASE environment variable is set
+      correctly. You can test this by trying to connect to the server
+      using isql from the same shell.
+
+      The tests are non-destructive (ie only SELECT statements),
+      except for Sybase::BCP which creates a temp table (#bcp) to test
+      the bulk copy features.
+
+   4) Type: perl Makefile.PL
       
-   4) Type: make
+   5) Type: make
 
       If you get errors (such as undefined variables) it may be
       because your DBLIBVS or CTLIBVS does not correspond to the Open
@@ -281,25 +308,7 @@ Once you have answered these eight questions, you can proceed:
       guaranteed to work (provided you have *some* version of
       DB-Library!)
 
-   6) Edit PWD
-
-      NOTE: This step is not normally necessary as the build process
-      now asks for this information up front.
-
-      Enter the user id and password that you want to use to run the
-      tests. It's probably a good idea to reset this file to its
-      original state once you're done, unless you really don't have
-      any security concerns!
-
-      Make sure that the SYBASE environment variable is set
-      correctly. You can test this by trying to connect to the server
-      using isql from the same shell.
-
-      The tests are non-destructive (ie only SELECT statements),
-      except for Sybase::BCP which creates a temp table (#bcp) to test
-      the bulk copy features.
-      
-   7) Type: make test
+   6) Type: make test
       If you decided to use static loading then a new perl binary will
       be generated at this point.
 
@@ -324,7 +333,7 @@ Once you have answered these eight questions, you can proceed:
       Sybperl/Sybperl.pm and move the __END__ tag to the very end
       of the file.
       
-   8) If everything went OK, type: make install
+   7) If everything went OK, type: make install
       This operation probably requires "root" priviledges as this
       installs the sybperl modules into the perl library tree.
       Note that the man page does not get installed automatically. To
@@ -334,7 +343,7 @@ Once you have answered these eight questions, you can proceed:
       perl binary has been built in the sybperl source directory, no
       perl binary gets installed (see step 9).
 
-   9) If the LINKTYPE is static type:
+   8) If the LINKTYPE is static type:
 
 	 make -f Makefile.aperl inst_perl MAP_TARGET=perl
 
@@ -342,7 +351,7 @@ Once you have answered these eight questions, you can proceed:
       using dynamic linking as the existing Perl binary will load the
       new code dynamically when required.
 
-  10) Read the manual :-)
+   9) Read the manual :-)
 
       Look for it in the pod/ directory. You can create .man or .html
       versions from the .pod file by using pod2man or pod2html, both

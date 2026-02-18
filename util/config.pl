@@ -5,6 +5,7 @@
 
 use Config;
 use ExtUtils::MakeMaker;
+use Getopt::Long;
 
 use strict;
 
@@ -92,6 +93,13 @@ sub config
   }
 
   $sattr{SYBASE} = $SYBASE;
+
+  # Flag to use ENV for PWD file generation
+  my $use_env;
+  GetOptions(
+    '--use_env' => \$use_env
+  );
+  $sattr{USE_ENV} = $use_env;
 
   \%sattr;
 }
